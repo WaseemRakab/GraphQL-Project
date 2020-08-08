@@ -1,0 +1,17 @@
+<h4 mat-dialog-title>Delete Confirmation</h4>
+<div mat-dialog-content class="mat-typography">
+  <p>Are you sure you want to delete this post?</p>
+  <mat-progress-bar *ngIf="onDeleting" mode="indeterminate"></mat-progress-bar>
+  <mat-hint *ngIf="onDeleted"><p class="lead">Your Post has been Deleted!</p>
+  </mat-hint>
+  <mat-hint *ngIf="onDeleteError">
+    <p class="lead" *ngFor="let errorMessage of deleteErrors">
+      {{errorMessage}}
+    </p>
+  </mat-hint>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-raised-button color="warn" [disabled]="deleteProgress" (click)="deletePost();">Yes</button>
+  <button mat-raised-button color="primary" [disabled]="deleteProgress" [mat-dialog-close] cdkFocusInitial>No</button>
+</div>
+

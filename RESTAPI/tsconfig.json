@@ -1,0 +1,26 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "ES2020",
+      "ES2015",
+      "ES6",
+      "ES5",
+      "DOM",
+      "ESNext"
+    ],
+    "module": "CommonJS",
+    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "moduleResolution": "Node",
+    "target": "ESNext"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

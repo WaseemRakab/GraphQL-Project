@@ -1,0 +1,44 @@
+<h1 class="mat-display-1 text-center" style="margin-bottom: 0; padding-top: 15px">Welcome !</h1>
+<div class="content text-center">
+  <mat-card>
+    <mat-card-header fxLayout fxLayoutAlign="center">
+      <mat-card-subtitle><p class="lead">Login</p></mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form id="signupForm" [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field class="formInput">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error *ngIf="errorHandling('email','required')">
+            <small>This field is required</small>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('email','email')">
+            <small>this is not a valid Email !</small>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="formInput">
+          <mat-label>Password</mat-label>
+          <input (paste)="preventPastePass($event);" matInput formControlName="password" type="password">
+          <mat-hint *ngIf="pasted"><small>You Cant Paste here</small></mat-hint>
+          <mat-error *ngIf="errorHandling('password','required')">
+            <small>This field is required</small>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('password','minlength')">
+            <small>Password must be at least 8 characters</small>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div *ngIf="authService.errorMessage !== null">
+        <p class="lead">
+          {{authService.errorMessage}}
+        </p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button form="signupForm" color="accent" [disabled]="loginForm.invalid" type="submit">Login
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

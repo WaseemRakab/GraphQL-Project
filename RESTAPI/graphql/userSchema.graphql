@@ -1,0 +1,46 @@
+type User {
+    _id: ID!
+    name: String!
+    email: String!
+    password: String
+    status: String!
+}
+
+type AuthData {
+    token: String!
+    userId: String!
+    expiresIn: Int!
+    email: String!
+}
+
+type UserVerifyData {
+    success: Boolean!
+    userId: String
+    email: String
+    message: String
+}
+
+input UserInputData {
+    email: String!
+    name: String!
+    password: String!
+}
+
+type UserStatus {
+    status: String!
+}
+
+type Query {
+    login(email: String!, password: String!): AuthData!
+    verifyUser(token: String): UserVerifyData!
+    userStatus: UserStatus!
+}
+
+type Mutation {
+    createUser(userInput: UserInputData): User!
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

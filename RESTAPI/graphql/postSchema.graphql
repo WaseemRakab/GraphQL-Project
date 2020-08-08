@@ -1,0 +1,43 @@
+type Post {
+    _id: ID!
+    title: String!
+    userId: String!
+    content: String!
+    creatorName: String!
+    createdDate: String!
+    updatedDate: String!
+    image: String!
+}
+
+input PostInputData {
+    title: String!
+    content: String!
+    image: String!
+    createdDate: String
+}
+
+input PostEditInputData {
+    postInput: PostInputData!
+    postId: String!
+}
+
+type PostsData {
+    posts: [Post!]!
+    length: Int!
+}
+
+type PostData {
+    success: Boolean!
+    post: Post
+}
+
+extend type Query {
+    posts(pageIndex: Int = 0, pageSize: Int = 4): PostsData!
+    post(postID: String!): PostData!
+}
+
+extend type Mutation {
+    createPost(postInput: PostInputData): PostData!
+    editPost(postEditInput: PostEditInputData): PostData!
+    deletePost(postId: String): PostData!
+}

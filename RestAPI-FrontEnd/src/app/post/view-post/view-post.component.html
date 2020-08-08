@@ -1,0 +1,22 @@
+<div class="text-center">
+  <h1 class="mat-display-1">{{(postData | async).title}}</h1>
+  <hr class="my-4">
+  <p class="lead">
+    Created by {{(postData| async).creatorName}} at: {{(postData| async).createdDate | date:'d MMMM yyyy,H:mm'}}
+  </p>
+  <hr class="my-4">
+  <p class="lead">
+    Edited at  {{(postData| async).updatedDate | date:'d MMMM yyyy,H:mm'}}
+  </p>
+  <button mat-raised-button color="warn" (click)="showImage()">Image Preview</button>
+  <hr class="my-4">
+  <mat-form-field appearance="outline" style="width: 60%">
+    <mat-label>Post Content:</mat-label>
+    <textarea matInput [readonly]="true" [rows]="4"
+              [mat-autosize]="false">  {{(postData | async).content}}</textarea>
+  </mat-form-field>
+  <hr class="my-4">
+  <p class="text-info">
+    <button mat-stroked-button (click)="openShareSheet()" role="button">Share Post</button>
+  </p>
+</div>

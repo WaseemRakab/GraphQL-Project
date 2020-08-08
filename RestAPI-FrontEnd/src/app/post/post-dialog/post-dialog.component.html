@@ -1,0 +1,76 @@
+<h2 mat-dialog-title class="font-weight-bold text-primary text-center">{{editMode ? 'Edit Post' : 'New Post'}}</h2>
+<mat-dialog-content mat-dialog-content class="mat-typography">
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()" id="postForm">
+    <mat-divider></mat-divider>
+    <mat-form-field appearance="fill" class="fullWidth" style="width: 100%">
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput type="text">
+      <mat-error *ngIf="errorHandling('title','required')">
+        <small>This field is required</small>
+      </mat-error>
+      <mat-error *ngIf="errorHandling('title','minlength')">
+        <small>Title must have at least 3 characters!</small>
+      </mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="form-group pt-2" formGroupName="imageUpload">
+      <mat-radio-group formControlName="uploadOption" [title]="'Max File Size: 20 MB'">
+        <mat-radio-button value="Upload" class="pr-2">Upload Image</mat-radio-button>
+        <mat-radio-button value="URL">Insert URL</mat-radio-button>
+      </mat-radio-group>
+      <div *ngIf="uploadOption === 'Upload'">
+        <input type="file" [accept]="['image/jpeg','image/jpg','image/png']"
+               name="image"
+               class="form-control-file"
+               id="image"
+               (change)="onImageUploaded($event)">
+        <mat-hint *ngIf="editMode && !editedImage"><small>You have an image!</small></mat-hint>
+      </div>
+      <div *ngIf="uploadOption === 'URL'">
+        <mat-form-field class="fullWidth" style="width: 100%" appearance="fill">
+          <mat-label>
+            Image URL
+          </mat-label>
+          <input matInput formControlName="image">
+          <mat-hint *ngIf="editMode && !editedImage"><small>You have an image!</small></mat-hint>
+        </mat-form-field>
+        <mat-error *ngIf="errorHandling('imageUpload','validImage')">
+          <small>Invalid URL !</small>
+        </mat-error>
+      </div>
+      <mat-error *ngIf="errorHandling('imageUpload.image','required')">
+        <small>Please describe your post with an image</small>
+      </mat-error>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-form-field appearance="outline" class="fullWidth" style="width: 100%">
+      <mat-label>Content</mat-label>
+      <textarea matInput formControlName="content" [rows]="4" [mat-autosize]="false"></textarea>
+      <mat-error *ngIf="errorHandling('content','required')">
+        <small>This field is required</small>
+      </mat-error>
+      <mat-error *ngIf="errorHandling('content','minlength')">
+        <small>Content must have at least 8 characters!</small>
+      </mat-error>
+    </mat-form-field>
+  </form>
+  <div #focusMessage>
+    <mat-progress-bar *ngIf="onSubmitting" mode="indeterminate"></mat-progress-bar>
+    <mat-hint *ngIf="isSubmitted">
+      <p class="lead">Your Post has been {{editMode ? 'Updated' : 'Created'}} !</p>
+    </mat-hint>
+    <mat-hint *ngIf="onSubmitError">
+      <small class="lead" *ngFor="let errorMessage of submitErrors">
+        {{errorMessage}}
+      </small>
+    </mat-hint>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button [disabled]="submitProgress" color="warn"
+          (click)="checkFormBeforeClose()">{{'Cancel'| uppercase}}</button>
+  <button mat-raised-button color="primary" type="submit" form="postForm"
+          [disabled]="postForm.invalid || submitProgress"
+  >{{(editMode ? 'Update' : 'Create')| uppercase}}</button>
+</mat-dialog-actions>
+

@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center" style="height: 15vh">
+  <mat-dialog-content fxLayout="row" fxLayoutAlign="start center"
+                      class="mat-typography">
+    <p class="lead">Are you sure you want to discard the changes?</p>
+  </mat-dialog-content>
+</div>
+<mat-dialog-actions align="center">
+  <button mat-raised-button color="warn" (click)="confirm(true)">Yes</button>
+  <button mat-raised-button color="primary" (click)="confirm(false)">No</button>
+</mat-dialog-actions>

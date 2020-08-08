@@ -1,0 +1,71 @@
+<h1 class="mat-display-1 text-center" style="margin-bottom: 0; padding-top: 15px">Welcome !</h1>
+<div class="content text-center">
+  <mat-card>
+    <mat-card-header fxLayout fxLayoutAlign="center">
+      <mat-card-subtitle><p class="lead">Please Sign Up</p></mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form id="signupForm" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+        <mat-form-field class="formInput">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" type="text">
+          <mat-error *ngIf="errorHandling('name','required')">
+            <small>This field is required</small>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('name','minlength')">
+            <small>Name must have at least 3 characters!</small>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="formInput">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error *ngIf="errorHandling('name','required')">
+            <small>This field is required</small>
+          </mat-error>
+          <mat-error *ngIf="errorHandling('name','email')">
+            <small>Invalid Email!</small>
+          </mat-error>
+        </mat-form-field>
+        <div formGroupName="passwords" class="text-left">
+          <mat-form-field class="formInput">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password">
+            <mat-error *ngIf="errorHandling('passwords.password','required')">
+              <small>This field is required</small>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('passwords.password','minlength')">
+              <small>Password must be at least 8 characters long!</small>
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="formInput">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput placeholder="Confirm Password" formControlName="confirmPassword"
+                   (paste)="$event.preventDefault(); pasted=true;"
+                   type="password">
+            <mat-hint *ngIf="pasted"><small>You Cant Paste here</small></mat-hint>
+            <mat-error *ngIf="errorHandling('passwords.confirmPassword','required')">
+              <small>This field is required</small>
+            </mat-error>
+            <mat-error *ngIf="errorHandling('passwords.confirmPassword','minlength')">
+              <small>Password must be at least 8 characters long!</small>
+            </mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="errorHandling('passwords','passwordsMismatch')">
+            <small>Confirm password must match with password !</small>
+          </mat-error>
+        </div>
+      </form>
+      <div *ngIf="authService.errorMessage !== null">
+        <p class="lead">
+          {{authService.errorMessage}}
+        </p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button form="signupForm" color="accent" [disabled]="signUpForm.invalid" type="submit">Sign Up
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

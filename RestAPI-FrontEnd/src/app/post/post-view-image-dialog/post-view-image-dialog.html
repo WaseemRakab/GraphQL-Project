@@ -1,0 +1,20 @@
+<div *ngIf="loadingImage else imageView" fxLayoutAlign="center" style="height: 15vh">
+  <mat-dialog-content fxLayout="row" fxLayoutAlign="start center">
+    <mat-spinner color="primary"></mat-spinner>
+  </mat-dialog-content>
+</div>
+<ng-template #imageView>
+  <mat-dialog-content>
+    <div *ngIf="imageNotFound else showImage">
+      <p class="lead">
+        Image Not Found, or Error occurred!
+      </p>
+    </div>
+    <ng-template #showImage>
+      <img class="img-fluid" [src]="image.image64" [alt]="image.alt">
+    </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions align="center">
+    <button mat-raised-button type="button" color="primary" [mat-dialog-close]>Close</button>
+  </mat-dialog-actions>
+</ng-template>

@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <form (ngSubmit)="submitPost()" [formGroup]="statusUpdateForm">
+        <div class="input-group pt-lg-3">
+          <mat-form-field>
+            <mat-label>
+              Your status
+            </mat-label>
+            <input matInput
+                   formControlName="status">
+            <mat-hint *ngIf="statusInvalid">
+              <small>
+                Please enter a status!
+              </small>
+            </mat-hint>
+          </mat-form-field>
+          <div class="input-group-append">
+            <button mat-button color="warn" type="submit"
+                    [disabled]="statusUpdateForm.invalid">{{'Update' | uppercase}}</button>
+          </div>
+        </div>
+      </form>
+      <div class="form-group text-center">
+        <button mat-raised-button color="accent" (click)="openDialog()">{{'New Post' | uppercase}}</button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <mat-divider></mat-divider>
+    <div fxLayout fxLayoutAlign="center" class="pt-md-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
